@@ -1,5 +1,7 @@
 ## claudio
-A minimal, containerized `claude` development environment.
+A minimal, containerized `claude` development environment. It exists mostly to run auto mode at a higher level of isolation than Claude Code's native sandboxing: everything happens inside a disposable container instead of directly on your machine.
+
+It's built with `git`, `curl`, `mise`, and `docker`, and Docker commands go to an isolated dind instance instead of your host. `mise.toml` ships with just `claude` and `jq`; see [Tooling](#tooling) to add more.
 
 ### Install
 ```sh
@@ -10,13 +12,17 @@ alias claudio="docker compose -f ~/.claudio/docker-compose.yml run --rm claude"
 ### Usage
 Navigate to your project and invoke `claudio` like you would invoke `claude`.
 
-### Features
-- **Sandboxed**: Docker commands go to an isolated dind instance, not your host.
-- **Minimal**: Ubuntu 24.04 with `git`, `curl`, `mise`, and `docker`. `mise.toml` ships with just `claude` and `jq`.
-- **A [template](https://github.com/new?template_name=claudio&template_owner=zapo)**: fork it and make it yours.
+### Isolation
+Each run is a fresh, disposable container (`--rm`): anything outside the mounts below is gone once it exits. Docker commands go to their own dind daemon, so they can't see or touch your host's containers, images, or volumes.
 
-### Tooling layers
-Three places to add tools, depending on who they're for:
+What does persist across runs, via named volumes:
+- `~/.config` and `~/.claude` (settings, credentials, conversation history).
+- The dind daemon's own image/container cache, so you're not re-pulling images every run.
+
+Your project directory is bind-mounted at `/workspace`, so file edits land directly on your host, same as running `claude` outside a container.
+
+### Tooling
+There are three places to add tools, depending on who they're for:
 
 | File | Who gets it | Committed? |
 | --- | --- | --- |
