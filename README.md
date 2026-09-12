@@ -2,14 +2,9 @@
 A containerized `claude` — isolated, disposable, forkable.
 
 ### Install
-Clone it, then add a `claudio` function to your shell rc (`~/.bashrc`, `~/.zshrc`, ...):
 ```sh
 git clone https://github.com/zapo/claudio.git ~/.claudio
-
-claudio() {
-  TZ="$(cat /etc/timezone 2>/dev/null || echo UTC)" \
-    docker compose -f ~/.claudio/docker-compose.yml run --rm claude
-}
+alias claudio="docker compose -f ~/.claudio/docker-compose.yml run --rm claude"
 ```
 
 ### Usage
@@ -17,7 +12,6 @@ Navigate to your project and invoke `claudio` like you would invoke `claude`.
 
 ### Features
 - **Sandboxed** — runs in its own container; Docker commands go to an isolated dind instance, not your host.
-- **Your timezone** — forwarded from the host automatically, no config needed.
 - **Minimal by default** — `mise.toml` ships with just `claude`. Add languages/CLIs there for everyone, or system packages in the `Dockerfile`.
 - **A [template](https://github.com/new?template_name=claudio&template_owner=zapo)** — fork it and make it yours.
 
