@@ -2,14 +2,13 @@
 A containerized `claude` — isolated, disposable, forkable.
 
 ### Install
-```
-export CLAUDIO_PATH=~/.local/share/claudio # or wherever you prefer
-
-git clone https://github.com/zapo/claudio.git "$CLAUDIO_PATH"
+Clone it, then add a `claudio` function to your shell rc (`~/.bashrc`, `~/.zshrc`, ...):
+```sh
+git clone https://github.com/zapo/claudio.git ~/.claudio
 
 claudio() {
   TZ="$(cat /etc/timezone 2>/dev/null || echo UTC)" \
-    docker compose -f "$CLAUDIO_PATH/docker-compose.yml" run --rm claude
+    docker compose -f ~/.claudio/docker-compose.yml run --rm claude
 }
 ```
 
@@ -32,8 +31,8 @@ Three places to add tools, depending on who they're for:
 | `mise.local.toml` | just you | no (gitignored) |
 
 Opt-in groups activate via `MISE_ENV`, set in a `.env` file next to `docker-compose.yml`:
-```
-echo MISE_ENV=playwright >> "$CLAUDIO_PATH/.env"
+```sh
+echo MISE_ENV=playwright >> ~/.claudio/.env
 ```
 They compose — `MISE_ENV=playwright,python` merges `mise.playwright.toml` and `mise.python.toml` together — so each group stays in its own file instead of needing one file per combination.
 
