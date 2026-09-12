@@ -6,15 +6,24 @@ services:
       DOCKER_TLS_CERTDIR: ""
     volumes:
       - dind-internal-cache:/var/lib/docker
+    healthcheck:
+      test: ["CMD", "docker", "info"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
 
   claude:
-    build: .
+    build:
+      context: .
+      args:
+        MISE_ENV: ${MISE_ENV:-}
     depends_on:
-      - dockerd-isolated
+      dockerd-isolated:
+        condition: service_healthy
     environment:
       - DOCKER_HOST=tcp://dockerd-isolated:2375
       - CLAUDE_CONFIG_DIR=/home/ubuntu/.claude
-      - TZ=America/New_York
+      - TZ=${TZ:-UTC}
     volumes:
       - config:/home/ubuntu/.config
       - claude:/home/ubuntu/.claude

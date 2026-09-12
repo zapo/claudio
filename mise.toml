@@ -1,6 +1,2 @@
 [tools]
-go = "latest"
-gh = "latest"
-node = "20"
-playwright = "latest"
 claude = "latest"

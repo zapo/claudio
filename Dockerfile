@@ -1,11 +1,19 @@
 FROM ubuntu:24.04
 
+ARG MISE_ENV=""
+ENV MISE_ENV=$MISE_ENV
+
 RUN apt-get update && apt-get install -y --no-install-recommends extrepo
 RUN extrepo enable mise
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl ca-certificates procps openssh-client \
     mise \
+    docker.io \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN if [ "$MISE_ENV" = "playwright" ]; then \
+    apt-get update && apt-get install -y --no-install-recommends \
     libasound2t64 \
     libatk1.0-0 \
     libcairo2 \
@@ -30,7 +38,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-liberation \
     fonts-noto-color-emoji \
     fonts-unifont \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*; \
+    fi
 
 RUN mkdir -p /workspace \
              /home/ubuntu/.config \
@@ -41,9 +50,9 @@ USER ubuntu
 WORKDIR /workspace
 
 
-COPY mise.toml ./
+COPY mise.toml mise.*.toml ./
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 RUN mise install
-RUN mise exec -- npx playwright install chromium
+RUN if [ "$MISE_ENV" = "playwright" ]; then mise exec -- npx playwright install chromium; fi
 
 ENTRYPOINT ["mise", "exec", "claude", "--", "claude"]
