@@ -41,10 +41,9 @@ USER ubuntu
 WORKDIR /workspace
 
 
-COPY mise.toml mise.toml
+COPY mise.toml ./
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 RUN mise install
-
 RUN mise exec -- npx playwright install chromium
 
-ENTRYPOINT ["mise", "exec", "--", "claude"]
+ENTRYPOINT ["mise", "exec", "claude", "--", "claude"]
