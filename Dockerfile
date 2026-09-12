@@ -35,8 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN mkdir -p /workspace \
              /home/ubuntu/.config \
-             /home/ubuntu/.claude \
-    touch /home/ubuntu/.bash_history && \
+             /home/ubuntu/.claude && \
     chown -R ubuntu:ubuntu /workspace /home/ubuntu
 
 # 3. Switch to user space
