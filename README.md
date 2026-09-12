@@ -9,4 +9,4 @@ alias claudy="docker compose -f <claudy-path>/docker-compose.yml run --rm claude
 ```
 
 ### Usage
-Navigate to your project and invoke claudy like you would invooke claude.
+Navigate to your project and invoke `claudy` like you would invoke claude.
