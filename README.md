@@ -17,6 +17,7 @@ Each run is a fresh, disposable container (`--rm`): anything outside the mounts 
 
 Persists across runs, via named volumes:
 - `~/.config` and `~/.claude` (settings, credentials, conversation history).
+- `~/.gitconfig` and `~/.gitignore` (git identity, `gh` credential helper, personal ignore patterns).
 - The dind daemon's own image/container cache, so you're not re-pulling images every run.
 
 Bind-mounted from your host:

@@ -54,6 +54,12 @@ WORKDIR /workspace
 COPY mise.toml mise.*.toml ./
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 RUN mise install
+RUN touch ~/.gitignore && \
+    git config --global core.excludesFile ~/.gitignore && \
+    git config --global credential.https://github.com.helper "" && \
+    git config --global --add credential.https://github.com.helper "!gh auth git-credential" && \
+    git config --global credential.https://gist.github.com.helper "" && \
+    git config --global --add credential.https://gist.github.com.helper "!gh auth git-credential"
 RUN if [ "$MISE_ENV" = "playwright" ]; then mise exec -- npx playwright install chromium; fi
 
 ENTRYPOINT ["mise", "exec", "claude", "--", "claude"]

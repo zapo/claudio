@@ -29,6 +29,8 @@ services:
     volumes:
       - config:/home/ubuntu/.config
       - claude:/home/ubuntu/.claude
+      - gitconfig:/home/ubuntu/.gitconfig
+      - gitignore:/home/ubuntu/.gitignore
       - ${PWD}:/workspace
     stdin_open: true
     tty: true
@@ -36,4 +38,6 @@ services:
 volumes:
   config:
   claude:
+  gitconfig:
+  gitignore:
   dind-internal-cache:
