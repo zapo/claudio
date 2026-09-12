@@ -1,0 +1,28 @@
+services:
+  dockerd-isolated:
+    image: docker:27-dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+    volumes:
+      - dind-internal-cache:/var/lib/docker
+
+  claude-sandbox:
+    build: .
+    depends_on:
+      - dockerd-isolated
+    environment:
+      - DOCKER_HOST=tcp://dockerd-isolated:2375
+      - CLAUDE_CONFIG_DIR=/home/ubuntu/.claude
+      - TZ=America/New_York
+    volumes:
+      - config:/home/ubuntu/.config
+      - claude:/home/ubuntu/.claude
+      - ${PWD}:/workspace
+    stdin_open: true
+    tty: true
+
+volumes:
+  config:
+  claude:
+  dind-internal-cache:
