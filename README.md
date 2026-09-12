@@ -1,7 +1,7 @@
 ## claudio
 A minimal, containerized `claude` development environment. It exists mostly to run auto mode at a higher level of isolation than Claude Code's native sandboxing: everything happens inside a disposable container instead of directly on your machine.
 
-It's built with `git`, `curl`, `mise`, and `docker`, and Docker commands go to an isolated dind instance instead of your host. `mise.toml` ships with just `claude` and `jq`; see [Tooling](#tooling) to add more.
+It's built with `git`, `curl`, `mise`, and `docker`. `mise.toml` ships with just `claude` and `jq`; see [Tooling](#tooling) to add more.
 
 ### Install
 ```sh
