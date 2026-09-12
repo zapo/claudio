@@ -1,3 +1,5 @@
+name: claudio
+
 services:
   dockerd-isolated:
     image: docker:27-dind
