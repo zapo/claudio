@@ -15,6 +15,12 @@ Navigate to your project and invoke `claudio` like you would invoke `claude`.
 - **Minimal by default** — `mise.toml` ships with just `claude`. Add languages/CLIs there for everyone, or system packages in the `Dockerfile`.
 - **A [template](https://github.com/new?template_name=claudio&template_owner=zapo)** — fork it and make it yours.
 
+### What's in the box
+- **Base** — Ubuntu 24.04.
+- **System packages** — `git`, `curl`, `ca-certificates`, `procps`, `openssh-client`, `mise`, and `docker.io` + `docker-compose-v2` (talk to the isolated dind instance).
+- **mise tools (default)** — `claude`, `jq`.
+- **An isolated dind daemon** — a separate `dockerd-isolated` service the container's Docker CLI points at, so Docker commands never touch your host's daemon.
+
 ### Tooling layers
 Three places to add tools, depending on who they're for:
 
