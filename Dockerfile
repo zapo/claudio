@@ -3,7 +3,6 @@ FROM ubuntu:24.04
 RUN apt-get update && apt-get install -y --no-install-recommends extrepo
 RUN extrepo enable mise
 
-# 1. Install system prerequisites
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl ca-certificates procps openssh-client \
     mise \
@@ -38,19 +37,14 @@ RUN mkdir -p /workspace \
              /home/ubuntu/.claude && \
     chown -R ubuntu:ubuntu /workspace /home/ubuntu
 
-# 3. Switch to user space
 USER ubuntu
 WORKDIR /workspace
 
 
+COPY mise.toml mise.toml
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+RUN mise install
 
-RUN mise use -g node@22 && mise use -g npm:playwright
 RUN mise exec -- npx playwright install chromium
 
-RUN mise install go@latest && mise use -g go@latest
-RUN mise install gh@latest && mise use -g gh@latest
-
-RUN curl -fsSL https://claude.ai/install.sh | bash
-
-CMD ["/home/ubuntu/.local/bin/claude", "agents"]
+CMD ["mise", "exec", "--", "claude", "agents"]

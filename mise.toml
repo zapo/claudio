@@ -1,0 +1,7 @@
+[tools]
+go = "latest"
+gh = "latest"
+node = "20"
+playwright = "latest"
+"aqua:anthropics/claude-code" = "latest"
+
