@@ -47,4 +47,4 @@ RUN mise install
 
 RUN mise exec -- npx playwright install chromium
 
-CMD ["mise", "exec", "--", "claude", "agents"]
+ENTRYPOINT ["mise", "exec", "--", "claude"]
