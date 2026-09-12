@@ -7,7 +7,7 @@ services:
     volumes:
       - dind-internal-cache:/var/lib/docker
 
-  claude-sandbox:
+  claude:
     build: .
     depends_on:
       - dockerd-isolated
