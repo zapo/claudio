@@ -4,8 +4,10 @@ wrapped in a docker container for isolation.
 
 ### Install
 ```
-git clone https://github.com/zapo/claudy.git <claudy-path>
-alias claudy="docker compose -f <claudy-path>/docker-compose.yml run --rm claude-sandbox"
+export CLAUDY_PATH=~/.local/share/claudy # or wherever you prefer
+
+git clone https://github.com/zapo/claudy.git "$CLAUDY_PATH"
+alias claudy="docker compose -f "$CLAUDY_PATH/docker-compose.yml" run --rm claude-sandbox"
 ```
 
 ### Usage
