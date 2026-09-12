@@ -13,13 +13,16 @@ alias claudio="docker compose -f ~/.claudio/docker-compose.yml run --rm claude"
 Navigate to your project and invoke `claudio` like you would invoke `claude`.
 
 ### Isolation
-Each run is a fresh, disposable container (`--rm`): anything outside the mounts below is gone once it exits. Docker commands go to their own dind daemon, so they can't see or touch your host's containers, images, or volumes.
+Each run is a fresh, disposable container (`--rm`): anything outside the mounts below is gone once it exits.
 
-What does persist across runs, via named volumes:
+Persists across runs, via named volumes:
 - `~/.config` and `~/.claude` (settings, credentials, conversation history).
 - The dind daemon's own image/container cache, so you're not re-pulling images every run.
 
-Your project directory is bind-mounted at `/workspace`, so file edits land directly on your host, same as running `claude` outside a container.
+Bind-mounted from your host:
+- Your project directory, at `/workspace`. File edits land directly on your host, same as running `claude` outside a container.
+
+Docker commands go to their own dind daemon, so they can't see or touch your host's containers, images, or volumes.
 
 ### Tooling
 There are three places to add tools, depending on who they're for:
