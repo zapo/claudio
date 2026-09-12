@@ -1,5 +1,5 @@
 ## claudio
-A containerized `claude` — isolated, disposable, forkable.
+A minimal, containerized `claude` development environment.
 
 ### Install
 ```sh
