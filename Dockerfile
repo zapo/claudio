@@ -54,7 +54,10 @@ WORKDIR /workspace
 COPY mise.toml mise.*.toml ./
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 RUN mise install
-RUN touch ~/.gitignore && \
+RUN mkdir -p ~/.git-home && \
+    ln -s ~/.git-home/gitconfig ~/.gitconfig && \
+    ln -s ~/.git-home/gitignore ~/.gitignore && \
+    touch ~/.gitignore && \
     git config --global core.excludesFile ~/.gitignore && \
     git config --global credential.https://github.com.helper "" && \
     git config --global --add credential.https://github.com.helper "!gh auth git-credential" && \
