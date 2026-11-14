@@ -51,7 +51,9 @@ USER ubuntu
 WORKDIR /workspace
 
 
-COPY mise.toml mise.*.toml ./
+ENV MISE_CONFIG_DIR=/opt/claudio
+ENV PATH=/home/ubuntu/.local/share/mise/shims:$PATH
+COPY mise.toml mise.*.toml /opt/claudio/
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 RUN mise install
 RUN mkdir -p ~/.git-home && \
