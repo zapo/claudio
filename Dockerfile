@@ -51,8 +51,6 @@ USER ubuntu
 WORKDIR /workspace
 
 
-# Keep mise config outside /workspace: compose bind-mounts the project over it,
-# which would hide these files at runtime.
 ENV MISE_CONFIG_DIR=/opt/claudio
 ENV PATH=/home/ubuntu/.local/share/mise/shims:$PATH
 COPY mise.toml mise.*.toml /opt/claudio/
